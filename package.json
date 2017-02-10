@@ -1,52 +1,23 @@
 {
-  "name": "gh-x9",
-  "version": "0.1.0",
-  "description": "GitHub Fork Scouting",
-  "main": "github-crescer-server.js",
-  "dependencies": {
-    "bower": "1.7.9",
-    "cookie-parser": "^1.4.0",
-    "eslint": "^3.1.1",
-    "express": "^4.13.3",
-    "github": "0.2.3",
-    "httpdispatcher": "0.4.0",
-    "open": "0.0.5",
-    "request": "^2.67.0"
-  },
-  "engines": {
-    "node": "6.3.0"
-  },
-  "devDependencies": {
-    "eslint": "^3.1.1",
-    "eslint-config-google": "^0.6.0",
-    "gulp": "3.9.1",
-    "gulp-eslint": "^3.0.1",
-    "gulp-minify-css": "1.0.0",
-    "gulp-plumber": "1.0.0",
-    "gulp-rename": "1.2.2",
-    "gulp-sass": "^2.3.2",
-    "nodemon": "^1.11.0"
-  },
+  "name": "node",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd ./src/ && node server.js",
-    "postinstall": "bower install"
+    "gen-config": "cd tasks && node generate-config-js.js && cd ../",
+    "build": "npm run gen-config",
+    "start": "npm run build && node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bernardobrezende/gh-x9.git"
-  },
-  "keywords": [
-    "gh-x9",
-    "x9",
-    "crescer",
-    "projeto",
-    "crescer"
-  ],
-  "author": "Bernardo Bosak de Rezende",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bernardobrezende/gh-x9/issues"
-  },
-  "homepage": "https://github.com/bernardobrezende/gh-x9#readme"
+  "dependencies": {
+    "axios": "^0.15.3",
+    "body-parser": "~1.16.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.0",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.5",
+    "express": "~4.14.1",
+    "express-load": "^1.1.15",
+    "moment": "^2.17.1",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.2"
+  }
 }

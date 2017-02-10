@@ -1,0 +1,8 @@
+{
+    "id": "test",
+    "name": "Teste",
+    "repositories": [
+        "mzabriskie/axios",
+        "benhurott/react-native-masked-text"
+    ]
+}

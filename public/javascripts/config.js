@@ -1,0 +1,5 @@
+var config = {
+    "NUMBER_DISPLAY_COMMITS": 3,
+    "COMMIT_SINCE_DAYS": 20,
+    "MINUTES_RELOAD_COMMITS": 2
+}
