@@ -1,8 +1,45 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
 }
+
+#loader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255,255,255,0.6);
+	z-index: 1000;
+}
+
+	#loader img {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		width: 100px;
+		height: 100px;
+		margin-left: -50px;
+		margin-top: -50px;
+		z-index: 1001;
+	}
+
+.logged-bar {
+	height: 60px;
+	text-align: right;
+	position: relative;
+	padding: 0;
+}
+
+	.logged-bar__action {
+		border-left: 1px solid white;
+		height: 100%;
+		min-width: 100px;
+		text-align: center;
+		color: white;
+		padding-top: 20px;
+		cursor: pointer;
+	}

@@ -25,7 +25,8 @@ module.exports = function () {
     app.use(logger('dev'));
     app.use(cookieParser());
 
-    load('models', { cwd: 'app' })
+    load('core', { cwd: 'app' })
+		.then('models')
         .then('services')
         .then('middlewares')
         .then('routes')

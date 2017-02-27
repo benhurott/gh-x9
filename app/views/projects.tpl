@@ -1,8 +1,8 @@
-<tpl:layout>layouts/_master</tpl:layout>
+<tpl:layout>layouts/_logged-user-master</tpl:layout>
 
-<div class="columns">
-    <div class="column is-half">
-        <table class="table">
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3 col-md-8 col-sm-12 col-xs-12">
+        <table class="table table-striped table-hover">
             <thead>
                 <th>Name</th>
                 <th>Repositories</th>

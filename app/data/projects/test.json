@@ -3,6 +3,8 @@
     "name": "Teste",
     "repositories": [
         "mzabriskie/axios",
-        "benhurott/react-native-masked-text"
+        "benhurott/react-native-masked-text",
+		"vsouza/awesome-ios",
+		"benhurott/guerra-mistica"
     ]
 }
