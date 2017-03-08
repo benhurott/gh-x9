@@ -5,14 +5,28 @@ var publicRoutes = [
 ];
 
 module.exports = function(app) {
-	app.use(function(req, res, next) {
+	function hasValidCookie(req) {
+		var authCookie = req.cookies && req.cookies.ghx9;
+		var hasValidCookie = !!authCookie && authCookie === md5(process.env.ADMIN_KEY);
+
+		return hasValidCookie;
+	}
+
+	function hasValidHeader(req) {
+		var authHeader = req.headers['x-ghx9-auth'];
+		var hasValidHeader = !!authHeader && authHeader === process.env.ADMIN_KEY;
+
+		return hasValidHeader;
+	}
+
+	return function(req, res, next) {
 		if(publicRoutes.indexOf(req.url) >= 0) {
 			return next();
 		}
 
-		var auth = req.cookies.ghx9;
+		if(hasValidCookie(req) || hasValidHeader(req)) {
+			req.isLogged = true;
 
-		if(!!auth && auth === md5(process.env.ADMIN_KEY)) {
 			next();
 		}
 		else {
@@ -23,5 +37,5 @@ module.exports = function(app) {
 				res.redirect('/login');
 			}
 		}
-	});
+	};
 };

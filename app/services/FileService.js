@@ -3,6 +3,10 @@ var fs = require('fs');
 module.exports = function (app) {
 
     return {
+		exists: function(filename) {
+			return fs.existsSync(filename);
+		},
+
         readFile: function(filename, callback) {
             fs.readFile(filename, 'utf-8', function(err, content) {
                 callback(err, content);

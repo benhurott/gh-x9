@@ -30,3 +30,18 @@ tr.is-warning {
     .table-commits a:hover {
         text-decoration: underline;
     }
+
+.commit-action {
+	font-size: 20px;
+	opacity: 0.1;
+	color: black;
+	cursor: pointer;
+}
+
+	.commit-action:hover {
+		opacity: 1;
+	}
+
+	.commit-action.pinned {
+		opacity: 1;
+	}

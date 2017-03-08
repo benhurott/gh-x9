@@ -6,7 +6,7 @@ var loggedBar = new Vue({
 
 			axios.post('/signout')
 				.then(function() {
-					window.location = '/';
+					goToPage('/');
 				})
 				.catch(function(err) {
 					console.error(err);

@@ -58,7 +58,7 @@ module.exports = function(app) {
                 name: commit.commit.author.name,
                 avatar: commit.committer ? commit.committer.avatar_url : '/images/no-thumb.png'
             },
-            commit: {
+            detail: {
                 url: commit.html_url,
                 commentCount: commit.commit.comment_count,
                 sha: commit.sha,

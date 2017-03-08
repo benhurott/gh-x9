@@ -1,7 +1,7 @@
 var $repositoryList = new Vue({
     el: '#repList',
     data: {
-        repositories: {},
+        repositories: [],
         commitDays: config.COMMIT_SINCE_DAYS
     },
     methods: {
@@ -45,9 +45,26 @@ var $repositoryList = new Vue({
                 if(!lastCommitB) return false;
                 if(!lastCommitA) return true;
 
-                return lastCommitA.commit.timeAgo.miliseconds > lastCommitB.commit.timeAgo.miliseconds;
+                return lastCommitA.detail.timeAgo.miliseconds > lastCommitB.detail.timeAgo.miliseconds;
             });
-        }
+        },
+
+		pinCommit: function(repo, commit) {
+			var self = this;
+
+            loader.show();
+
+            pinCommitService.togglePin(repo.title, commit.detail.sha)
+                .then(function (res) {
+                    commit.pinned = !commit.pinned;
+                    self.$forceUpdate();
+                    loader.hide();
+                })
+                .catch(function (err) {
+                    console.error(err);
+                    loader.hide();
+                });
+		}
     },
     mounted: function() {
         this.loadRepositories();

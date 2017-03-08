@@ -1,7 +1,6 @@
 <tpl:layout>layouts/_master</tpl:layout>
 
 <tpl:header>
-	<title>GH-X9</title>
 	<link rel="stylesheet" href="/stylesheets/_logged-user-master.css">
 </tpl:header>
 
@@ -11,9 +10,16 @@
 
 <div class="row" id="loggedBar">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 logged-bar bg-primary">
-		<div class="logged-bar__action pull-right" v-on:click="signout">
+
+		<a href="/" class="logged-bar__action pull-left">
+			<i class="fa fa-home"></i> Home
+		</a>
+		<a href="/pinned-commits" class="logged-bar__action pull-left">
+			<i class="fa fa-thumb-tack"></i> Pinned
+		</a>
+		<a href="javascript:void(0)" class="logged-bar__action pull-left" v-on:click="signout">
 			<i class="fa fa-sign-out"></i> Sair
-		</div>
+		</a>
 	</div>
 </div>
 <div class="row">

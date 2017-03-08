@@ -27,19 +27,13 @@ a {
 		z-index: 1001;
 	}
 
-.logged-bar {
-	height: 60px;
-	text-align: right;
-	position: relative;
-	padding: 0;
+
+
+
+.cursor-pointer {
+	cursor: pointer;
 }
 
-	.logged-bar__action {
-		border-left: 1px solid white;
-		height: 100%;
-		min-width: 100px;
-		text-align: center;
-		color: white;
-		padding-top: 20px;
-		cursor: pointer;
-	}
+.row-deleted {
+	opacity: 0.4;
+}
