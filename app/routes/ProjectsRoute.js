@@ -22,6 +22,51 @@ module.exports = function(app) {
 
     app.get('/project/detail/:id', ReqAdminMiddleware, function(req, res, next) {
 
+		function fetchCommit(repo) {
+			return GithubApiService.getCommits(repo)
+				.then(function (commits) {
+					resultCommits = commits;
+
+					var shas = commits.map(function (c) {
+						return c.detail.sha;
+					});
+
+					return CommitPinModel.find({
+						sha: {
+							$in: shas
+						}
+					}).exec()
+				})
+				.then(function (pins) {
+					resultCommits.forEach(function (c) {
+						c.pinned = !!pins.find(function (p) {
+							return p.sha === c.detail.sha
+						});
+					});
+
+					return resultCommits;
+				})
+				.then(function(commits) {
+					return commits
+				});
+		}
+
+		function reorderByCommits(repositories) {
+			repositories.sort(function(a, b) {
+				if (a.commits && a.commits.length) {
+					if (b.commits.length) {
+						return a.commits[0].detail.timeAgo.miliseconds - b.commits[0].detail.timeAgo.miliseconds;
+					}
+
+					return 1;
+				}
+
+				return -1;
+			});
+
+			return repositories;
+		}
+
         ProjectModel.findOne({ _id: req.params.id }).exec()
 			.then(function (project) {
 				if(!project) {
@@ -30,51 +75,46 @@ module.exports = function(app) {
 					return next(error);
 				}
 
-                res.render('project-detail', {
-                    project: project
-                });
+				var result = {
+					name: project.name,
+					repositories: []
+				};
+
+				var commitsToFetch = project.repositories.length || 0;
+				var commitsFetched = 0
+
+				function checkAndCommitResponse() {
+					if (++commitsFetched == commitsToFetch) {
+						result.repositories = reorderByCommits(result.repositories);
+
+						res.render('project-detail', {
+							project: result
+						});
+					}
+				}
+
+				project.repositories.forEach(function(r) {
+					var formattedRep = {
+						name: r.split('/')[1]
+					};
+
+					fetchCommit(r)
+						.then(function(commits) {
+							formattedRep.commits = commits;
+							result.repositories.push(formattedRep);
+
+							checkAndCommitResponse();
+						})
+						.catch(function(err) {
+							formattedRep.error = true;
+							result.repositories.push(formattedRep);
+
+							checkAndCommitResponse();
+						});
+				});
             })
 			.catch(function (err) {
 				next(err);
-            });
-    });
-
-    // ?repo=user/repo
-    app.get('/project/repository/commits', ReqAdminMiddleware, function(req, res, next) {
-        var repo = req.query.repo;
-
-        var resultCommits = [];
-
-        GithubApiService.getCommits(repo)
-			.then(function (commits) {
-				resultCommits = commits;
-
-				var shas = commits.map(function (c) {
-					return c.detail.sha;
-                });
-
-				return CommitPinModel.find({
-					sha: {
-						$in: shas
-					}
-				}).exec()
-            })
-			.then(function (pins) {
-				resultCommits.forEach(function (c) {
-					c.pinned = !!pins.find(function (p) {
-						return p.sha === c.detail.sha
-                    });
-                });
-
-				return resultCommits;
-            })
-            .then(function(commits) {
-                res.status(200).json(commits);
-            })
-            .catch(function(err) {
-                res.status(500).json({
-                    message: err.message
-                });
             });
     });
 
