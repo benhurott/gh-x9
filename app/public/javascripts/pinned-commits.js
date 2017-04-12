@@ -9,7 +9,7 @@ var $pins = new Vue({
 
             loader.show();
 
-            pinCommitService.togglePin(pin.repository, pin.sha)
+            pinCommitService.togglePin(pin.commit)
                 .then(function (res) {
                     pin.deleted = !pin.deleted;
                     self.$forceUpdate();

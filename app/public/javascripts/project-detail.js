@@ -10,7 +10,7 @@ var $repositoryList = new Vue({
 
             loader.show();
 
-            pinCommitService.togglePin(repo.name, commit.detail.sha)
+            pinCommitService.togglePin(commit)
                 .then(function (res) {
                     commit.pinned = !commit.pinned;
                     self.$forceUpdate();

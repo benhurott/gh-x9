@@ -7,17 +7,17 @@ var ACCEPT_HEADER = 'application/vnd.github.v3+json';
 module.exports = function(app) {
 
     function buildUrl(path) {
-        return GITHUB_API_URL 
-            + path 
-            + '?client_id=' 
-            + process.env.GITHUB_CLIENT_ID 
+        return GITHUB_API_URL
+            + path
+            + '?client_id='
+            + process.env.GITHUB_CLIENT_ID
             + '&client_secret='
             + process.env.GITHUB_CLIENT_SECRET;
     }
 
     function getTimeAgo(then) {
         var now = moment();
-        
+
         var ms = moment(now).diff(moment(then));
         var d = moment.duration(ms);
 
@@ -52,20 +52,23 @@ module.exports = function(app) {
         };
     }
 
-    function formatCommit(commit) {
+    function formatCommit(commit, repoName) {
         return {
             author: {
                 name: commit.commit.author.name,
                 avatar: commit.committer ? commit.committer.avatar_url : '/images/no-thumb.png'
             },
             detail: {
-                url: commit.html_url,
+				url: commit.html_url,
                 commentCount: commit.commit.comment_count,
                 sha: commit.sha,
                 date: moment(commit.commit.author.date).format('YYYY-MM-DD HH:mm:ss'),
                 message: commit.commit.message,
                 timeAgo: getTimeAgo(commit.commit.author.date)
-            }
+            },
+			repository: {
+				name: repoName
+			}
         };
     }
 
@@ -80,7 +83,9 @@ module.exports = function(app) {
                 return response
                     .data
                     .filter(applyDisplayCommitsLimit)
-                    .map(formatCommit)
+                    .map(function(commit) {
+						return formatCommit(commit, repo);
+					})
             });
     }
 

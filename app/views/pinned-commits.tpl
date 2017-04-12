@@ -25,9 +25,9 @@
                         <i class="fa cursor-pointer" :class="{'fa-trash': !pin.deleted, 'fa-thumb-tack': pin.deleted}" title="Delete Pin"
                             v-on:click="toggle(pin)"></i>
                     </td>
-                    <td>{{pin.repository}}</td>
+                    <td>{{pin.commit.repository.name}}</td>
                     <td>
-                        <a :href="'https://github.com/' + pin.repository + '/commit/'+ pin.sha" target="_blank">
+                        <a :href="pin.commit.detail.url" target="_blank">
                             {{pin.sha}}
                         </a>
                     </td>

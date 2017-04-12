@@ -1,3 +1,5 @@
+var Promise = require("bluebird");
+
 module.exports = function(app) {
     var GithubApiService = app.services.GithubApiService;
 
@@ -22,29 +24,30 @@ module.exports = function(app) {
 
     app.get('/project/detail/:id', ReqAdminMiddleware, function(req, res, next) {
 
+		function loadPin(commits) {
+			return new Promise(function(resolve, reject) {
+				var toLoad = commits.length;
+				var loaded = 0;
+
+				for(var i = 0; i < toLoad; i++) {
+					var commit = commits[i];
+
+					CommitPinModel.count({sha: commit.detail.sha}, function(err, count) {
+						commit.pinned = count > 0;
+						loaded++;
+
+						if (loaded == toLoad) {
+							resolve(commits);
+						}
+					});
+				}
+			});
+		}
+
 		function fetchCommit(repo) {
 			return GithubApiService.getCommits(repo)
 				.then(function (commits) {
-					resultCommits = commits;
-
-					var shas = commits.map(function (c) {
-						return c.detail.sha;
-					});
-
-					return CommitPinModel.find({
-						sha: {
-							$in: shas
-						}
-					}).exec()
-				})
-				.then(function (pins) {
-					resultCommits.forEach(function (c) {
-						c.pinned = !!pins.find(function (p) {
-							return p.sha === c.detail.sha
-						});
-					});
-
-					return resultCommits;
+					return loadPin(commits);
 				})
 				.then(function(commits) {
 					return commits
@@ -95,7 +98,7 @@ module.exports = function(app) {
 
 				project.repositories.forEach(function(r) {
 					var formattedRep = {
-						name: r.split('/')[1]
+						name: r
 					};
 
 					fetchCommit(r)
@@ -119,15 +122,15 @@ module.exports = function(app) {
     });
 
 	app.post('/project/repository/commit/pin', ReqAdminMiddleware, function(req, res, next) {
-		var sha = req.body.sha;
-		var repository = req.body.repository;
+		var commit = req.body.commit
+		var sha = commit.detail.sha
 
 		var query = { sha: sha };
 
 		CommitPinModel.findOne(query).exec()
 			.then(function (pin) {
 				if(!pin) {
-					return CommitPinModel.create({ sha: sha, repository: repository });
+					return CommitPinModel.create({ sha: sha, commit: commit });
 				}
 
 				return pin.remove();

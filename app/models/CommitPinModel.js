@@ -9,11 +9,10 @@ module.exports = function () {
             maxlength: 100,
             index: true
         },
-        repository: {
-            type: String,
-            required: true,
-            maxlength: 100
-        },
+        commit: {
+			type: Object,
+			required: true
+		},
         dateCreated: {
             type: Date,
             required: true,

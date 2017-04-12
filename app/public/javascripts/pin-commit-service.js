@@ -1,6 +1,6 @@
 var pinCommitService = {
-    togglePin: function (repositoryName, sha) {
-        return axios.post('/project/repository/commit/pin', { repository: repositoryName, sha: sha })
+    togglePin: function (commit) {
+        return axios.post('/project/repository/commit/pin', { commit: commit })
             .then(function() {
                 return true
             });
