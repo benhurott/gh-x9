@@ -9,7 +9,7 @@ var jsConfigs = {
 
 var fileContent = 'var config = ' + JSON.stringify(jsConfigs, null, 4);
 
-fs.writeFile('../public/javascripts/config.js', fileContent, function(err) {
+fs.writeFile('../app/public/javascripts/config.js', fileContent, function(err) {
     if(err) {
         console.log(err);
     }
