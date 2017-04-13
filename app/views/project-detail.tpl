@@ -41,9 +41,9 @@
 								</td>
 								<td>
 									{{ commit.detail.timeAgo.description }} <br />
-									<span class="commit-date">
+									<!--<span class="commit-date">
 										<i class="fa fa-clock-o"></i> {{ commit.detail.date }}
-									</span>
+									</span>-->
 								</td>
 								<td>
 									<a v-bind:href="commit.detail.url" target="_blank">
