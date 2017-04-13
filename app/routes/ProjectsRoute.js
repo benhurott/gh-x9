@@ -72,6 +72,12 @@ module.exports = function(app) {
 
 				function checkAndCommitResponse() {
 					if (++commitsFetched == commitsToFetch) {
+
+						result.repositories.sort(function(a, b) {
+							return a.commits[0].detail.timeAgo.miliseconds -
+								   b.commits[0].detail.timeAgo.miliseconds
+						});
+
 						res.render('project-detail', {
 							project: result
 						});
