@@ -87,7 +87,7 @@ module.exports = function(app) {
 						return formatCommit(commit, repo);
 					})
 					.sort(function(a, b) {
-						return 1;
+						return a.detail.timeAgo.miliseconds - b.detail.timeAgo.miliseconds;
 					});
             });
     }
