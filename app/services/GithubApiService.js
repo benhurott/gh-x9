@@ -16,8 +16,7 @@ module.exports = function(app) {
     }
 
     function getTimeAgo(then) {
-        var now = moment();
-
+        var now = moment.utc();
         var ms = moment(now).diff(moment(then));
         var d = moment.duration(ms);
 
