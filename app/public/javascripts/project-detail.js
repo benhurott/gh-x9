@@ -25,3 +25,7 @@ var $repositoryList = new Vue({
     mounted: function() {
     }
 });
+
+setTimeout(function() {
+	location.reload();
+}, config.MINUTES_RELOAD_COMMITS * 1000 * 60)
