@@ -54,22 +54,6 @@ module.exports = function(app) {
 				});
 		}
 
-		function reorderByCommits(repositories) {
-			repositories.sort(function(a, b) {
-				if (a.commits && a.commits.length) {
-					if (b.commits.length) {
-						return a.commits[0].detail.timeAgo.miliseconds - b.commits[0].detail.timeAgo.miliseconds;
-					}
-
-					return 1;
-				}
-
-				return -1;
-			});
-
-			return repositories;
-		}
-
         ProjectModel.findOne({ _id: req.params.id }).exec()
 			.then(function (project) {
 				if(!project) {
@@ -88,8 +72,6 @@ module.exports = function(app) {
 
 				function checkAndCommitResponse() {
 					if (++commitsFetched == commitsToFetch) {
-						result.repositories = reorderByCommits(result.repositories);
-
 						res.render('project-detail', {
 							project: result
 						});

@@ -18,6 +18,7 @@ module.exports = function(app) {
     function getTimeAgo(then) {
         var now = moment.utc();
         var ms = moment(now).diff(moment(then));
+		ms = Math.abs(ms);
         var d = moment.duration(ms);
 
         var days = Math.floor(d.asDays());
@@ -85,6 +86,9 @@ module.exports = function(app) {
                     .map(function(commit) {
 						return formatCommit(commit, repo);
 					})
+					.sort(function(a, b) {
+						return 1;
+					});
             });
     }
 
