@@ -14,7 +14,7 @@
 		</h1>
 		<div id="repList">
 			<div v-for="rep in project.repositories">
-				<h2 class="title">{{ rep.name }}</h2>
+				<h2 class="title">{{ rep.name.split('/')[1] }}</h2>
 				<div v-if="rep.commits.length === 0 && !rep.loading">
 					Nenhum commit nos últimos {{ commitDays }} dias.
 				</div>
