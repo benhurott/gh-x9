@@ -15,6 +15,7 @@
 		<div id="repList">
 			<div v-for="rep in project.repositories">
 				<h2 class="title">{{ rep.name.split('/')[1] }}</h2>
+
 				<div v-if="rep.commits.length === 0 && !rep.loading">
 					Nenhum commit nos últimos {{ commitDays }} dias.
 				</div>
@@ -22,41 +23,50 @@
 					Carregando...
 				</div>
 				<div v-if="rep.commits.length">
-					<table class="table table-striped table-hover table-commits">
-						<thead>
-							<th class="cell-avatar">Avatar</th>
-							<th class="cell-name">Author</th>
-							<th class="cell-date">Date</th>
-							<th>Message</th>
-							<th>Comments</th>
-							<th>Actions</th>
-						</thead>
-						<tbody>
-							<tr v-for="commit in rep.commits" v-bind:class="{ 'is-warning': commit.detail.timeAgo.days > 0 }">
-								<td>
-									<img v-bind:src="commit.author.avatar" class="img-responsive img-rounded">
-								</td>
-								<td>
-									{{ commit.author.name }}
-								</td>
-								<td>
-									{{ commit.detail.timeAgo.description }} <br />
-								</td>
-								<td>
-									<a v-bind:href="commit.detail.url" target="_blank">
-										{{ commit.detail.message }}
-									</a>
-								</td>
-								<td>
-									{{ commit.detail.commentCount }}
-								</td>
-								<td>
-									<i v-bind:class="{'fa fa-thumb-tack commit-action': true, 'pinned': commit.pinned }"
+					<div>
+						<div class="row">
+							<div class="col-lg-2 col-md-3">
+								<img :src="'/images/repositories/' + rep.name + '.jpg'" alt="" style="height: 130px; width: 130px">
+								<div>
+									<a :href="'https://github.com/' + rep.name" target="_blank">{{ rep.name.split('/')[1] }}</a>
+								</div>
+							</div>
+							<div class="col-lg-10 col-md-9">
+								<div class="row" v-for="commit in rep.commits">
+									<div class="col-lg-12 col-md-12" style="margin-bottom: 8px">
+										<div class="row">
+											<div class="col-lg-1 col-md-2">
+												<img v-bind:src="commit.author.avatar" class="img-rounded" style="height: 50px; width: 50px;">
+											</div>
+											<div class="col-lg-10 col-md-9">
+												<div>
+													<a v-bind:href="commit.detail.url" target="_blank">
+														{{ commit.detail.message }}
+													</a>
+												</div>
+												<div>
+													<div class="pull-left" style="margin-right: 10px">
+														<i class="fa fa-clock-o"></i> {{ commit.detail.timeAgo.description }}
+													</div>
+													<div class="pull-left" style="margin-right: 10px">
+														<i class="fa fa-user"></i> {{ commit.author.name }} ({{ commit.author.ghLogin }})
+													</div>
+													<div class="pull-left" style="margin-right: 10px">
+														<i class="fa fa-comment-o"></i> {{ commit.detail.commentCount }}
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-1 col-md-1">
+												<i v-bind:class="{'fa fa-thumb-tack commit-action': true, 'pinned': commit.pinned }"
 										v-on:click="pinCommit(rep, commit)"></i>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
