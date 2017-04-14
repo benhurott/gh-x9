@@ -1,35 +1,27 @@
-.cell-avatar {
-    width: 50px;
+.repository {
+	margin-bottom: 15px;
+	border-bottom: 2px solid #E8E8E8;
 }
 
-.cell-name {
-    width: 200px;
-}
+	.repository__avatar {
+	}
 
-.cell-date {
-    width: 160px;
-}
+		.repository__avatar img {
+			height: 130px;
+			width: 130px;
+		}
 
-.commit-date {
-    font-size: 10px;
-    color: gray;
-}
+	.repository__commit {
+		margin-bottom: 10px;
+	}
 
-    .commit-date i {
-        font-size: 16px;
-    }
+		.repository_commit_secondary {
+			font-size: 9px;
+		}
 
-tr.is-warning {
-    color: red;
-}
-
-.table-commits a {
-    color: dimgray;
-}
-
-    .table-commits a:hover {
-        text-decoration: underline;
-    }
+		.repository__commit__info {
+			margin-right: 10px;
+		}
 
 .commit-action {
 	font-size: 20px;
@@ -38,10 +30,6 @@ tr.is-warning {
 	cursor: pointer;
 }
 
-	.commit-action:hover {
-		opacity: 1;
-	}
-
-	.commit-action.pinned {
+	.commit-action:hover, .commit-action.pinned {
 		opacity: 1;
 	}
