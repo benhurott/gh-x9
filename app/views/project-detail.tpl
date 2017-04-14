@@ -26,11 +26,14 @@
 							<div class="col-lg-2 col-md-3 repository__avatar text-center" >
 								<img :src="'/images/repositories/' + rep.name + '.jpg'" class="img-rounded" alt="">
 								<div>
-									<a :href="'https://github.com/' + rep.name" target="_blank">{{ rep.name.split('/')[1] }}</a>
+									<a :href="'https://github.com/' + rep.name" target="_blank">
+										{{ rep.name.split('/')[1] }} <br />
+										({{ rep.commits[0].author.ghLogin }})
+									</a>
 								</div>
 							</div>
 							<div class="col-lg-10 col-md-9">
-								<div class="row repository__commit" v-for="(commit, index) in rep.commits">
+								<div class="row repository__commit" v-for="(commit, index) in rep.commits" :class="{ 'is-warning': commit.detail.timeAgo.days > 0 }">
 									<div class="col-lg-12 col-md-12">
 										<div class="row">
 											<div class="col-lg-11 col-md-11">
@@ -44,7 +47,7 @@
 														<i class="fa fa-clock-o"></i> {{ commit.detail.timeAgo.description }}
 													</div>
 													<div class="pull-left repository__commit__info">
-														<i class="fa fa-user"></i> {{ commit.author.name }} ({{ commit.author.ghLogin }})
+														<i class="fa fa-user"></i> {{ commit.author.ghLogin }}
 													</div>
 													<div class="pull-left repository__commit__info">
 														<i class="fa fa-comment-o"></i> {{ commit.detail.commentCount }}

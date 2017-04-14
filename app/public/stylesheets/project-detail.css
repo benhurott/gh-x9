@@ -1,5 +1,6 @@
 .repository {
 	margin-bottom: 15px;
+	padding-bottom: 10px;
 	border-bottom: 2px solid #E8E8E8;
 }
 
@@ -33,3 +34,7 @@
 	.commit-action:hover, .commit-action.pinned {
 		opacity: 1;
 	}
+
+.is-warning {
+	color: red;
+}
