@@ -56,6 +56,7 @@ module.exports = function(app) {
         return {
             author: {
                 name: commit.commit.author.name,
+				ghLogin: commit.committer.login,
                 avatar: commit.committer ? commit.committer.avatar_url : '/images/no-thumb.png'
             },
             detail: {
@@ -67,7 +68,8 @@ module.exports = function(app) {
                 timeAgo: getTimeAgo(commit.commit.author.date)
             },
 			repository: {
-				name: repoName
+				name: repoName,
+				url: 'https://github.com/' + repoName
 			}
         };
     }
