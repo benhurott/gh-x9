@@ -29,18 +29,28 @@ module.exports = function(app) {
 				var toLoad = commits.length;
 				var loaded = 0;
 
-				for(var i = 0; i < toLoad; i++) {
-					var commit = commits[i];
+				var shas = commits.map(function(c) {
+					return c.detail.sha;
+				})
 
-					CommitPinModel.count({sha: commit.detail.sha}, function(err, count) {
-						commit.pinned = count > 0;
-						loaded++;
+				CommitPinModel.find({
+					'commit.detail.sha': {
+						$in: shas
+					}
+				}, 'commit.detail.sha')
+					.exec()
+					.then(function(pins) {
+						commits.forEach(function(c) {
+							c.pinned = !!pins.find(function(p) {
+								return p.commit.detail.sha === c.detail.sha;
+							})
+						});
 
-						if (loaded == toLoad) {
-							resolve(commits);
-						}
+						resolve(commits)
+					})
+					.catch(function(err) {
+						reject(err);
 					});
-				}
 			});
 		}
 
