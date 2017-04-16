@@ -7,6 +7,10 @@ module.exports = function () {
 			type: String,
 			required: true
 		},
+		useTravisCI: {
+			type: Boolean,
+			default: false
+		},
 		repositories: [String]
 	});
 

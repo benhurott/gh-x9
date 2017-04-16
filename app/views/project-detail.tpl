@@ -70,8 +70,11 @@
 						</div>
 						<div class="row repository__repository_actions">
 							<div class="col-lg-12 col-md-12">
-								<div class="pull-right">
+								<div class="pull-right" style="margin-left: 15px;">
 									<i :class="{'fa fa-lightbulb-o repo-action': true, 'active': rep.highlighted}" v-on:click="hightlight(rep)"></i>
+								</div>
+								<div class="pull-right" v-if="project.useTravisCI">
+									<img :src="'https://api.travis-ci.org/'+ rep.name +'.svg?branch=master'" alt="">
 								</div>
 							</div>
 						</div>

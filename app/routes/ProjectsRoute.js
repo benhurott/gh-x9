@@ -74,6 +74,7 @@ module.exports = function(app) {
 
 				var result = {
 					name: project.name,
+					useTravisCI: !!project.useTravisCI,
 					repositories: []
 				};
 
