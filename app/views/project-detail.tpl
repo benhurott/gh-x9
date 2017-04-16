@@ -13,18 +13,23 @@
 			<%= project.name %>
 		</h1>
 		<div id="repList">
-			<div v-for="rep in project.repositories">
-				<div v-if="rep.commits.length === 0 && !rep.loading">
-					Nenhum commit nos últimos {{ commitDays }} dias.
-				</div>
-				<div v-if="rep.loading">
-					Carregando...
-				</div>
-				<div v-if="rep.commits.length">
-					<div>
-						<div class="row repository" >
-							<div class="col-lg-2 col-md-3 repository__avatar text-center" >
-								<img :src="'/images/repositories/' + rep.name + '.jpg'" class="img-rounded" alt="">
+			<div v-for="rep in project.repositories" class="repository row" :class="{'highlighted': rep.highlighted}">
+				<div class="col-lg-12 col-md-12">
+					<div v-if="rep.commits.length === 0 && !rep.loading">
+						Nenhum commit nos últimos {{ commitDays }} dias.
+					</div>
+					<div v-if="rep.loading">
+						Carregando...
+					</div>
+					<div v-if="rep.commits.length">
+						<div class="row">
+							<div class="col-lg-2 col-md-3 repository__avatar text-center">
+								<div class="repository__avatar__image">
+									<img :src="'/images/repositories/' + rep.name + '.jpg'" class="img-rounded" alt="">
+									<!--<div class="repository__avatar__image__actions">
+										<i :class="{'fa fa-lightbulb-o repo-action': true, 'active': rep.highlighted}" v-on:click="hightlight(rep)"></i>
+									</div>-->
+								</div>
 								<div>
 									<a :href="'https://github.com/' + rep.name" target="_blank">
 										{{ rep.name.split('/')[1] }} <br />
@@ -36,7 +41,7 @@
 								<div class="row repository__commit" v-for="(commit, index) in rep.commits" :class="{ 'is-warning': commit.detail.timeAgo.days > 0 }">
 									<div class="col-lg-12 col-md-12">
 										<div class="row">
-											<div class="col-lg-11 col-md-11">
+											<div class="col-lg-10 col-md-10">
 												<div>
 													<a v-bind:href="commit.detail.url" target="_blank">
 														{{ commit.detail.message }}
@@ -54,18 +59,26 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-lg-1 col-md-1">
-												<i v-bind:class="{'fa fa-thumb-tack commit-action': true, 'pinned': commit.pinned }"
-										v-on:click="pinCommit(rep, commit)"></i>
+											<div class="col-lg-2 col-md-2">
+												<i v-bind:class="{'fa fa-thumb-tack commit-action': true, 'pinned': commit.pinned }" v-on:click="pinCommit(rep, commit)"></i>
+
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+						<div class="row repository__repository_actions">
+							<div class="col-lg-12 col-md-12">
+								<div class="pull-right">
+									<i :class="{'fa fa-lightbulb-o repo-action': true, 'active': rep.highlighted}" v-on:click="hightlight(rep)"></i>
+								</div>
+							</div>
+						</div>
 
+					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -75,6 +88,7 @@
 	<script>
 		var project = <%- JSON.stringify(project) %>
 	</script>
+	<script src="/javascripts/local-storage-service.js"></script>
 	<script src="/javascripts/pin-commit-service.js"></script>
 	<script src="/javascripts/project-detail.js"></script>
 </tpl:scripts>

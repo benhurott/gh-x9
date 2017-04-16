@@ -1,16 +1,27 @@
 .repository {
 	margin-bottom: 15px;
-	padding-bottom: 10px;
 	border-bottom: 2px solid #E8E8E8;
 }
 
 	.repository__avatar {
 	}
-
 		.repository__avatar img {
 			height: 130px;
 			width: 130px;
 		}
+
+		.repository__avatar__image {
+			position: relative
+		}
+			.repository__avatar__image__actions {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				height: 24px;
+				background-color: rgba(255, 255, 255, 0.7);
+				width: 100%;
+				padding-top: 2px;
+			}
 
 	.repository__commit {
 		margin-bottom: 10px;
@@ -24,17 +35,32 @@
 			margin-right: 10px;
 		}
 
-.commit-action {
+	.repository__repository_actions {
+		border-top: 2px dotted #E8E8E8;
+		padding-top: 2px;
+		margin-top: 5px;
+	}
+
+.commit-action, .repo-action {
 	font-size: 20px;
 	opacity: 0.1;
 	color: black;
 	cursor: pointer;
+	margin-right: 10px;
 }
 
-	.commit-action:hover, .commit-action.pinned {
+.repo-action {
+	opacity: 0.3;
+}
+
+	.commit-action:hover, .commit-action.pinned, .repo-action.active {
 		opacity: 1;
 	}
 
 .is-warning {
 	color: red;
+}
+
+.highlighted {
+	background-color: #FFFFE0;
 }
