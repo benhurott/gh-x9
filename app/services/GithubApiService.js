@@ -56,7 +56,7 @@ module.exports = function(app) {
         return {
             author: {
                 name: commit.commit.author.name,
-				ghLogin: commit.committer.login,
+				ghLogin: commit.committer ? commit.committer.login : 'not informed',
                 avatar: commit.committer ? commit.committer.avatar_url : '/images/no-thumb.png'
             },
             detail: {
@@ -95,7 +95,11 @@ module.exports = function(app) {
 							return -1
 						}
 					});
-            });
+            })
+			.catch(function(err) {
+				console.error(err);
+				throw err;
+			});
     }
 
     return {
